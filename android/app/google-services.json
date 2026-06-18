@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1081497804318",
+    "project_id": "graduation-project-4083d",
+    "storage_bucket": "graduation-project-4083d.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1081497804318:android:b820cc1d5963705636580f",
+        "android_client_info": {
+          "package_name": "com.example.citizen_application"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCRwdnQlQJ5wRAvX-SMF67If69nrr8GJOE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1081497804318:android:1e994605b3f0f07136580f",
+        "android_client_info": {
+          "package_name": "com.example.employee_application"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCRwdnQlQJ5wRAvX-SMF67If69nrr8GJOE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
