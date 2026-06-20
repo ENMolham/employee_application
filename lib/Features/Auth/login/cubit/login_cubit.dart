@@ -28,6 +28,9 @@ class LoginCubit extends Cubit<LoginState> {
 
     response.fold((l) => emit(LoginState.error(l)), (r) {
       _sharedPreferencesUtils.setToken(r.token);
+      _sharedPreferencesUtils.setUserName(r.nameUser);
+      _sharedPreferencesUtils.setImageUrl(r.imageUserUrl);
+      _sharedPreferencesUtils.setGovernmentEntity(r.governmentEntityUser);
       emit(LoginState.success(r));
     });
   }
@@ -40,18 +43,19 @@ class LoginCubit extends Cubit<LoginState> {
   Future<void> fakEmitLogin(String login, String password) async {
     emit(const LoginState.loading());
     await Future.delayed(const Duration(milliseconds: 500));
-    emit(
-      LoginState.success(
-        LoginEntity(
-          message: "Fake success",
-          token: '11111111111111111111111111111111111',
-          nameUser: "محمد سعيد",
-          imageUserUrl:
-              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIb1Rzl1hRfAv4mVFgDajXGAByt2Jhq8ECIQ&s",
-          governmentEntityUser: "شعبة الأحوال المدنية",
-        ),
-      ),
+    final entity = LoginEntity(
+      message: "Fake success",
+      token: '11111111111111111111111111111111111',
+      nameUser: "محمد سعيد",
+      imageUserUrl:
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIb1Rzl1hRfAv4mVFgDajXGAByt2Jhq8ECIQ&s",
+      governmentEntityUser: "شعبة الأحوال المدنية",
     );
+    _sharedPreferencesUtils.setToken(entity.token);
+    _sharedPreferencesUtils.setUserName(entity.nameUser);
+    _sharedPreferencesUtils.setImageUrl(entity.imageUserUrl);
+    _sharedPreferencesUtils.setGovernmentEntity(entity.governmentEntityUser);
+    emit(LoginState.success(entity));
     return;
   }
 }

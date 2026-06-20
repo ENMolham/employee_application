@@ -124,7 +124,7 @@ class _AddReplyDialogState extends State<AddReplyDialog> {
             });
           },
           success: (s) {
-            context.pop();
+            context.popPage();
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 behavior: SnackBarBehavior.floating,
@@ -184,7 +184,7 @@ class _AddReplyDialogState extends State<AddReplyDialog> {
           ),
           if (!isLoading)
             InkWell(
-              onTap: () => context.pop(),
+              onTap: () => context.popPage(),
               borderRadius: BorderRadius.circular(context.width(20)),
               child: Icon(
                 Icons.close,
@@ -272,7 +272,7 @@ class _AddReplyDialogState extends State<AddReplyDialog> {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           TextButton(
-            onPressed: isLoading ? null : () => context.pop(),
+            onPressed: isLoading ? null : () => context.popPage(),
             style: TextButton.styleFrom(
               backgroundColor: ColorConstant.grey,
               padding: EdgeInsets.symmetric(

@@ -5,11 +5,11 @@ import 'package:flutter/material.dart';
 
 class RowItem {
   final String? text;
-  final double width;
   final int type;
   final Color? colortext;
+  final int flex;
 
-  RowItem({this.text, required this.width, required this.type, this.colortext});
+  RowItem({this.text, this.type = 0, this.colortext, this.flex = 1});
 }
 
 class CustomRowContainerValue extends StatelessWidget {
@@ -25,7 +25,6 @@ class CustomRowContainerValue extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: context.width(1856),
       padding: EdgeInsets.symmetric(vertical: context.height(16)),
       decoration: BoxDecoration(
         border: Border(
@@ -38,8 +37,8 @@ class CustomRowContainerValue extends StatelessWidget {
       child: Row(
         children: items.map((item) {
           return item.type == 0
-              ? SizedBox(
-                  width: context.width(item.width),
+              ? Expanded(
+                  flex: item.flex,
                   child: CustomText(
                     text: item.text ?? "",
                     color: item.colortext ?? ColorConstant.black,
@@ -49,8 +48,8 @@ class CustomRowContainerValue extends StatelessWidget {
                     overflow: TextOverflow.fade,
                   ),
                 )
-              : SizedBox(
-                  width: context.width(item.width),
+              : Expanded(
+                  flex: item.flex,
                   child: Center(
                     child: InkWell(
                       onTap: onTap,

@@ -33,6 +33,33 @@ class SharedPreferencesUtils {
     );
   }
 
+  Future<void> setUserName(String name) async {
+    await _initialize();
+    await _prefs.setString("userNameKey", name);
+  }
+
+  Future<void> setGovernmentEntity(String entity) async {
+    await _initialize();
+    await _prefs.setString("governmentEntityKey", entity);
+  }
+
+  Future<void> setImageUrl(String imageUrl) async {
+    await _initialize();
+    await _prefs.setString("imageUrlKey", imageUrl);
+  }
+
+  String getUserName() {
+    return _prefs.getString("userNameKey") ?? '';
+  }
+
+  String getGovernmentEntity() {
+    return _prefs.getString("governmentEntityKey") ?? '';
+  }
+
+  String getImageUrl() {
+    return _prefs.getString("imageUrlKey") ?? '';
+  }
+
   String? getToken() {
     if (!_isInitialized()) {
       // ignore: avoid_print
@@ -41,27 +68,24 @@ class SharedPreferencesUtils {
     return _prefs.getString('token');
   }
 
-  Future<void> setUsername(String username) async {
-    await _initialize();
-    _prefs.setString('username', username);
-  }
-
-  Future<String?> getUsername() async {
-    if (!_isInitialized()) {
-      // ignore: avoid_print
-      print('SharedPreferences has not been initialized yet.');
-    }
-    return _prefs.getString('username');
-  }
-
-  Future<void> removeUsername() async {
-    await _initialize();
-    await _prefs.remove('username');
-  }
-
   Future<void> removeToken() async {
     await _initialize();
     await _prefs.remove('token');
+  }
+
+  Future<void> removeUserName() async {
+    await _initialize();
+    await _prefs.remove("userNameKey");
+  }
+
+  Future<void> removeGovernmentEntity() async {
+    await _initialize();
+    await _prefs.remove("governmentEntityKey");
+  }
+
+  Future<void> removeImageUrl() async {
+    await _initialize();
+    await _prefs.remove("imageUrlKey");
   }
 
   bool _isInitialized() {

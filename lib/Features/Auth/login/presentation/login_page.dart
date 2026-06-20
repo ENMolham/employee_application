@@ -2,18 +2,18 @@ import 'package:employee_application/Core/constant/colors_constant.dart';
 import 'package:employee_application/Core/constant/image_constant.dart';
 import 'package:employee_application/Core/error/network_exceptions.dart';
 import 'package:employee_application/Core/error/validate.dart';
-import 'package:employee_application/Core/extension/navigation_service.dart';
 import 'package:employee_application/Core/extension/screen_size_extension.dart';
 import 'package:employee_application/Features/Auth/login/Data/Model/login_entity.dart';
 import 'package:employee_application/Features/Auth/login/cubit/login_cubit.dart';
 import 'package:employee_application/Features/Auth/login/cubit/login_password_visibility_cubit.dart';
-import 'package:employee_application/Features/User/transactions_page/presentation/transactions_page.dart';
 import 'package:employee_application/Features/Widgets/custom_button.dart';
 import 'package:employee_application/Features/Widgets/custom_text.dart';
 import 'package:employee_application/Features/Widgets/custom_text_form_field.dart';
+import 'package:employee_application/app_router.dart';
 import 'package:employee_application/injection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -139,14 +139,7 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                           ),
                       success: (LoginEntity loginEntity) {
-                        context.pushAndRemoveUntil(
-                          TransactionsPage(
-                            nameUser: loginEntity.nameUser,
-                            imageUserUrl: loginEntity.imageUserUrl,
-                            governmentEntityUser:
-                                loginEntity.governmentEntityUser,
-                          ),
-                        );
+                        context.go(AppRoutes.transactions);
                       },
                     );
                   },

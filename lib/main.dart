@@ -3,7 +3,7 @@
 import 'package:employee_application/Core/constant/colors_constant.dart';
 import 'package:employee_application/Core/utils/notification/notification_service.dart';
 import 'package:employee_application/Core/utils/shared_preference_utils.dart';
-import 'package:employee_application/Features/Auth/login/presentation/login_page.dart';
+import 'package:employee_application/app_router.dart';
 import 'package:employee_application/firebase_options.dart';
 import 'package:employee_application/injection.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -26,7 +26,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
+      routerConfig: appRouter,
       locale: const Locale('ar'),
       supportedLocales: const [Locale('en'), Locale('ar')],
       localizationsDelegates: const [
@@ -69,7 +70,6 @@ class MyApp extends StatelessWidget {
         ),
         fontFamily: 'Cairo',
       ),
-      home: LoginPage(),
     );
   }
 }

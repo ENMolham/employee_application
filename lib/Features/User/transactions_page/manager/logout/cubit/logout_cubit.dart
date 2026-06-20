@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:employee_application/Core/error/network_exceptions.dart';
+import 'package:employee_application/Core/utils/shared_preference_utils.dart';
 import 'package:employee_application/Features/User/transactions_page/manager/logout/Data/Model/logout_entity.dart';
 import 'package:employee_application/Features/User/transactions_page/manager/logout/Data/Repostry/basereposotry_logout.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,15 +13,21 @@ part 'logout_cubit.freezed.dart';
 
 @injectable
 class LogOutCubit extends Cubit<LogOutState> {
-  LogOutCubit(this._baseReposotrylogOut) : super(const LogOutState.initial());
+  LogOutCubit(this._baseReposotrylogOut, this._sharedPreferencesUtils)
+    : super(const LogOutState.initial());
 
   final BaseReposotrylogOut _baseReposotrylogOut;
+  final SharedPreferencesUtils _sharedPreferencesUtils;
 
   Future<void> emitlogOut() async {
     emit(const LogOutState.loading());
     if (isClosed) return;
     final response = await _baseReposotrylogOut.logOut();
     response.fold((l) => emit(LogOutState.error(l)), (r) {
+      _sharedPreferencesUtils.removeToken();
+      _sharedPreferencesUtils.removeUserName();
+      _sharedPreferencesUtils.removeImageUrl();
+      _sharedPreferencesUtils.removeGovernmentEntity();
       emit(LogOutState.success(r));
     });
   }
@@ -29,7 +36,11 @@ class LogOutCubit extends Cubit<LogOutState> {
     emit(const LogOutState.loading());
     if (isClosed) return;
     await Future.delayed(const Duration(milliseconds: 1500));
-    emit(LogOutState.success(LogOutEntity(message: "تم ارسال الرد بنجاح")));
+    _sharedPreferencesUtils.removeToken();
+    _sharedPreferencesUtils.removeUserName();
+    _sharedPreferencesUtils.removeImageUrl();
+    _sharedPreferencesUtils.removeGovernmentEntity();
+    emit(LogOutState.success(LogOutEntity(message: "تم تسجيل الخروج بنجاح")));
     return;
   }
 }

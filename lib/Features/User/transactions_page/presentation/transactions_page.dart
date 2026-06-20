@@ -2,7 +2,6 @@ import 'package:employee_application/Core/constant/colors_constant.dart';
 import 'package:employee_application/Core/error/network_exceptions.dart';
 import 'package:employee_application/Core/extension/navigation_service.dart';
 import 'package:employee_application/Core/extension/screen_size_extension.dart';
-import 'package:employee_application/Features/User/detailes_transactions_page/presentation/detailes_transactions_page.dart';
 import 'package:employee_application/Features/User/transactions_page/Data/Model/transactions_page_entity.dart';
 import 'package:employee_application/Features/User/transactions_page/cubit/transactions_page_cubit.dart';
 import 'package:employee_application/Features/Widgets/custom_error.dart';
@@ -12,6 +11,7 @@ import 'package:employee_application/Features/Widgets/transactions_page/custom_r
 import 'package:employee_application/Features/Widgets/transactions_page/custom_row_container_value.dart';
 import 'package:employee_application/Features/Widgets/transactions_page/custom_row_filter_search_transaction.dart';
 import 'package:employee_application/Features/Widgets/filter/filter_options_data.dart';
+import 'package:employee_application/app_router.dart';
 import 'package:employee_application/injection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -141,17 +141,17 @@ class _TransactionsPageState extends State<TransactionsPage> {
                     },
                   ),
                   CustomContainerRowTitel(
-                    items: {
-                      "رقم المعاملة": 206,
-                      "اسم المعاملة": 206,
-                      "اسم مقدم المعاملة": 206,
-                      "الرقم الوطني": 206,
-                      "تاريخ تقديم المعاملة": 206,
-                      "تاريخ&وقت الوصول": 206,
-                      "تاريخ الإنتهاء": 206,
-                      "حالة المعاملة": 206,
-                      "الإجراءات": 206,
-                    },
+                    items: [
+                      "رقم المعاملة",
+                      "اسم المعاملة",
+                      "اسم مقدم المعاملة",
+                      "الرقم الوطني",
+                      "تاريخ تقديم المعاملة",
+                      "تاريخ&وقت الوصول",
+                      "تاريخ الإنتهاء",
+                      "حالة المعاملة",
+                      "الإجراءات",
+                    ],
                   ),
                   BlocBuilder<TransactionsPageCubit, TransactionsPageState>(
                     builder: (context, state) {
@@ -195,148 +195,125 @@ class _TransactionsPageState extends State<TransactionsPage> {
                             ),
                           );
                         },
-                        success:
-                            (TransactionsPageEntity transactionsPageEntity) {
-                              return transactionsPageEntity.data.isNotEmpty
-                                  ? Container(
-                                      height: context.height(745),
-                                      width: context.width(1856),
-                                      margin: EdgeInsets.only(
-                                        left: context.width(18),
-                                        right: context.width(18),
-                                        top: context.height(8),
-                                      ),
-                                      child: ListView.builder(
-                                        padding: EdgeInsets.zero,
-                                        itemCount:
-                                            transactionsPageEntity.data.length,
-                                        itemBuilder: (context, index) {
-                                          final item = transactionsPageEntity
-                                              .data[index];
-                                          return CustomRowContainerValue(
-                                            items: [
-                                              RowItem(
-                                                text: item.transactionID,
-                                                width: 206,
-                                                type: 0,
-                                              ),
-                                              RowItem(
-                                                text: item.transactionName,
-                                                width: 206,
-                                                type: 0,
-                                              ),
-                                              RowItem(
-                                                text: item
-                                                    .nameUserSubmaitTransaction,
-                                                width: 206,
-                                                type: 0,
-                                              ),
-                                              RowItem(
-                                                text: item.nationalId,
-                                                width: 206,
-                                                type: 0,
-                                              ),
-                                              RowItem(
-                                                text:
-                                                    item.dateSubmaitTransaction,
-                                                width: 206,
-                                                type: 0,
-                                              ),
-                                              RowItem(
-                                                text:
-                                                    item.dateReceiveTransaction,
-                                                width: 206,
-                                                type: 0,
-                                              ),
-                                              RowItem(
-                                                text:
-                                                    item.dateEndTransaction ??
-                                                    "---",
-                                                width: 206,
-                                                type: 0,
-                                              ),
-                                              RowItem(
-                                                text:
-                                                    item.statusTransaction ==
-                                                        "1".trim()
-                                                    ? "جديدة"
-                                                    : item.statusTransaction ==
-                                                          "2".trim()
-                                                    ? "قيد الدراسة"
-                                                    : item.statusTransaction ==
-                                                          "3".trim()
-                                                    ? "معلقة"
-                                                    : item.statusTransaction ==
-                                                          "4".trim()
-                                                    ? "محولة"
-                                                    : item.statusTransaction ==
-                                                          "5".trim()
-                                                    ? "محولة استثنائياً"
-                                                    : item.statusTransaction ==
-                                                          "6".trim()
-                                                    ? "مرفوضة"
-                                                    : "منتهية",
-                                                colortext:
-                                                    item.statusTransaction ==
-                                                        "1".trim()
-                                                    ? ColorConstant.blue
-                                                    : item.statusTransaction ==
-                                                          "2".trim()
-                                                    ? ColorConstant.yellow
-                                                    : item.statusTransaction ==
-                                                          "3".trim()
-                                                    ? ColorConstant.orange
-                                                    : item.statusTransaction ==
-                                                          "4".trim()
-                                                    ? ColorConstant.green
-                                                    : item.statusTransaction ==
-                                                          "5".trim()
-                                                    ? ColorConstant.bronze
-                                                    : item.statusTransaction ==
-                                                          "6".trim()
-                                                    ? ColorConstant.red
-                                                    : ColorConstant.khaki,
-                                                width: 206,
-                                                type: 0,
-                                              ),
-                                              RowItem(width: 206, type: 1),
-                                            ],
-                                            onTap: () {
-                                              context.push(
-                                                DetailesTransactionsPage(
-                                                  id: item.transactionID,
-                                                ),
-                                              );
-                                            },
-                                          );
-                                        },
-                                      ),
-                                    )
-                                  : SizedBox(
-                                      height: context.height(760),
-                                      child: Center(
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Icon(
-                                              Icons.file_copy,
-                                              size: context.iconSize(42),
-                                              color: ColorConstant.grey,
+                        success: (TransactionsPageEntity transactionsPageEntity) {
+                          return transactionsPageEntity.data.isNotEmpty
+                              ? Expanded(
+                                  child: Padding(
+                                    padding: EdgeInsets.only(
+                                      left: context.width(18),
+                                      right: context.width(18),
+                                      top: context.height(8),
+                                    ),
+                                    child: ListView.builder(
+                                      padding: EdgeInsets.zero,
+                                      itemCount:
+                                          transactionsPageEntity.data.length,
+                                      itemBuilder: (context, index) {
+                                        final item =
+                                            transactionsPageEntity.data[index];
+                                        return CustomRowContainerValue(
+                                          items: [
+                                            RowItem(text: item.transactionID),
+                                            RowItem(text: item.transactionName),
+                                            RowItem(
+                                              text: item
+                                                  .nameUserSubmaitTransaction,
                                             ),
-                                            CustomText(
+                                            RowItem(
+                                              text: item.nationalId,
+                                              type: 0,
+                                            ),
+                                            RowItem(
+                                              text: item.dateSubmaitTransaction,
+                                            ),
+                                            RowItem(
+                                              text: item.dateReceiveTransaction,
+                                            ),
+                                            RowItem(
                                               text:
-                                                  "لا يوجد معاملات مقدمة حالياً",
-                                              color: ColorConstant.grey,
-                                              size: context.fontSize(12),
-                                              fontWeight: FontWeight.bold,
-                                              paddingTop: context.height(8),
+                                                  item.dateEndTransaction ??
+                                                  "---",
                                             ),
+                                            RowItem(
+                                              text:
+                                                  item.statusTransaction ==
+                                                      "1".trim()
+                                                  ? "جديدة"
+                                                  : item.statusTransaction ==
+                                                        "2".trim()
+                                                  ? "قيد الدراسة"
+                                                  : item.statusTransaction ==
+                                                        "3".trim()
+                                                  ? "معلقة"
+                                                  : item.statusTransaction ==
+                                                        "4".trim()
+                                                  ? "محولة"
+                                                  : item.statusTransaction ==
+                                                        "5".trim()
+                                                  ? "محولة استثنائياً"
+                                                  : item.statusTransaction ==
+                                                        "6".trim()
+                                                  ? "مرفوضة"
+                                                  : "منتهية",
+                                              colortext:
+                                                  item.statusTransaction ==
+                                                      "1".trim()
+                                                  ? ColorConstant.blue
+                                                  : item.statusTransaction ==
+                                                        "2".trim()
+                                                  ? ColorConstant.yellow
+                                                  : item.statusTransaction ==
+                                                        "3".trim()
+                                                  ? ColorConstant.orange
+                                                  : item.statusTransaction ==
+                                                        "4".trim()
+                                                  ? ColorConstant.green
+                                                  : item.statusTransaction ==
+                                                        "5".trim()
+                                                  ? ColorConstant.bronze
+                                                  : item.statusTransaction ==
+                                                        "6".trim()
+                                                  ? ColorConstant.red
+                                                  : ColorConstant.khaki,
+                                            ),
+                                            RowItem(type: 1),
                                           ],
+                                          onTap: () {
+                                            context.pushTo(
+                                              AppRoutes.transactionDetails(
+                                                item.transactionID.toString(),
+                                              ),
+                                            );
+                                          },
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                )
+                              : SizedBox(
+                                  height: context.height(760),
+                                  child: Center(
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Icon(
+                                          Icons.file_copy,
+                                          size: context.iconSize(42),
+                                          color: ColorConstant.grey,
                                         ),
-                                      ),
-                                    );
-                            },
+                                        CustomText(
+                                          text: "لا يوجد معاملات مقدمة حالياً",
+                                          color: ColorConstant.grey,
+                                          size: context.fontSize(12),
+                                          fontWeight: FontWeight.bold,
+                                          paddingTop: context.height(8),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                        },
                       );
                     },
                   ),

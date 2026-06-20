@@ -4,8 +4,13 @@ import 'package:employee_application/Features/Widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 
 class CustomContainerRowTitel extends StatelessWidget {
-  final Map<String, double> items;
-  const CustomContainerRowTitel({super.key, required this.items});
+  final List<String> items;
+  final int flex;
+  const CustomContainerRowTitel({
+    super.key,
+    required this.items,
+    this.flex = 1,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -21,11 +26,11 @@ class CustomContainerRowTitel extends StatelessWidget {
         borderRadius: BorderRadius.circular(context.width(50)),
       ),
       child: Row(
-        children: items.entries.map((entry) {
-          return SizedBox(
-            width: context.width(entry.value),
+        children: items.map((entry) {
+          return Expanded(
+            flex: flex,
             child: CustomText(
-              text: entry.key,
+              text: entry,
               color: ColorConstant.black,
               size: context.fontSize(14),
               fontWeight: FontWeight.w600,

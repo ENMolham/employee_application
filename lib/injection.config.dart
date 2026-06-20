@@ -154,13 +154,16 @@ extension GetItInjectableX on _i174.GetIt {
         transactionsPageWebService: gh<_i139.TransactionsPageWebService>(),
       ),
     );
-    gh.factory<_i413.LogOutCubit>(
-      () => _i413.LogOutCubit(gh<_i477.BaseReposotrylogOut>()),
-    );
     gh.singleton<_i429.BaseReposotrychangeStatus>(
       () => _i410.ChangeStatusReposotryImpl(
         networkInfo: gh<_i1071.NetworkInfo>(),
         changeStatusWebService: gh<_i569.ChangeStatusWebService>(),
+      ),
+    );
+    gh.factory<_i413.LogOutCubit>(
+      () => _i413.LogOutCubit(
+        gh<_i477.BaseReposotrylogOut>(),
+        gh<_i131.SharedPreferencesUtils>(),
       ),
     );
     gh.factory<_i912.NotificationCubit>(
