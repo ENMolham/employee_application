@@ -15,7 +15,7 @@ class NotificationsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => getIt<NotificationCubit>()..fakEmitnotification(),
+      create: (context) => getIt<NotificationCubit>()..emitnotification(),
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

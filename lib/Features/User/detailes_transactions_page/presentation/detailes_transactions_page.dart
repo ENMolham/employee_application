@@ -26,7 +26,7 @@ class _DetailesTransactionsPageState extends State<DetailesTransactionsPage> {
   void initState() {
     super.initState();
     cubit = getIt<DetailesTransactionsPageCubit>();
-    cubit.fakEmitdetailesTransactionsPage(widget.id);
+    cubit.emitdetailesTransactionsPage(widget.id);
   }
 
   @override
@@ -72,7 +72,7 @@ class _DetailesTransactionsPageState extends State<DetailesTransactionsPage> {
                             onPressed: () {
                               context
                                   .read<DetailesTransactionsPageCubit>()
-                                  .fakEmitdetailesTransactionsPage(widget.id);
+                                  .emitdetailesTransactionsPage(widget.id);
                             },
                             errorTextSize: context.fontSize(12),
                           );

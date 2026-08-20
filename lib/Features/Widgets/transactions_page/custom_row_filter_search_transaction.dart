@@ -16,6 +16,7 @@ class CustomRowFilterSearchTransaction extends StatelessWidget {
   final ValueChanged<String> onDayChanged;
   final ValueChanged<String> onMonthChanged;
   final ValueChanged<String> onYearChanged;
+  final ValueChanged<String> onSearchChanged;
 
   const CustomRowFilterSearchTransaction({
     super.key,
@@ -28,6 +29,7 @@ class CustomRowFilterSearchTransaction extends StatelessWidget {
     required this.onDayChanged,
     required this.onMonthChanged,
     required this.onYearChanged,
+    required this.onSearchChanged,
   });
 
   @override
@@ -87,24 +89,42 @@ class CustomRowFilterSearchTransaction extends StatelessWidget {
               colorBorder: ColorConstant.greyLight,
               controller: searchController,
               isDense: false,
-              prefix: InkWell(
-                canRequestFocus: false,
-                splashColor: Colors.transparent,
-                highlightColor: Colors.transparent,
-                focusColor: Colors.transparent,
-                hoverColor: Colors.transparent,
-                overlayColor: WidgetStatePropertyAll(Colors.transparent),
-                radius: context.width(50),
-                onTap: () {},
-                child: Transform(
-                  alignment: Alignment.center,
-                  transform: Matrix4.rotationY(3.1416),
-                  child: Icon(
-                    Icons.search_rounded,
-                    size: context.iconSize(28),
-                    color: ColorConstant.black,
-                  ),
-                ),
+              onChanged: onSearchChanged,
+              prefix: ValueListenableBuilder<TextEditingValue>(
+                valueListenable: searchController,
+                builder: (context, value, _) {
+                  final bool hasText = value.text.isNotEmpty;
+                  return InkWell(
+                    canRequestFocus: false,
+                    splashColor: Colors.transparent,
+                    highlightColor: Colors.transparent,
+                    focusColor: Colors.transparent,
+                    hoverColor: Colors.transparent,
+                    overlayColor: WidgetStatePropertyAll(Colors.transparent),
+                    radius: context.width(50),
+                    onTap: hasText
+                        ? () {
+                            searchController.clear();
+                            onSearchChanged('');
+                          }
+                        : null,
+                    child: hasText
+                        ? Icon(
+                            Icons.close_rounded,
+                            size: context.iconSize(28),
+                            color: ColorConstant.black,
+                          )
+                        : Transform(
+                            alignment: Alignment.center,
+                            transform: Matrix4.rotationY(3.1416),
+                            child: Icon(
+                              Icons.search_rounded,
+                              size: context.iconSize(28),
+                              color: ColorConstant.black,
+                            ),
+                          ),
+                  );
+                },
               ),
             ),
           ),

@@ -9,6 +9,7 @@ enum TransactionStatus {
   exceptionallyTransferred,
   rejected,
   finished,
+  returnedToPreviousOffice,
 }
 
 extension TransactionStatusX on TransactionStatus {
@@ -26,6 +27,10 @@ extension TransactionStatusX on TransactionStatus {
         return TransactionStatus.exceptionallyTransferred;
       case "6":
         return TransactionStatus.rejected;
+      case "7":
+        return TransactionStatus.finished;
+      case "10":
+        return TransactionStatus.returnedToPreviousOffice;
       default:
         return TransactionStatus.finished;
     }
@@ -47,6 +52,8 @@ extension TransactionStatusX on TransactionStatus {
         return "6";
       case TransactionStatus.finished:
         return "7";
+      case TransactionStatus.returnedToPreviousOffice:
+        return "10";
     }
   }
 
@@ -66,6 +73,8 @@ extension TransactionStatusX on TransactionStatus {
         return "مرفوضة";
       case TransactionStatus.finished:
         return "منتهية";
+      case TransactionStatus.returnedToPreviousOffice:
+        return "إعادة إلى المكتب السابق";
     }
   }
 
@@ -85,6 +94,8 @@ extension TransactionStatusX on TransactionStatus {
         return ColorConstant.red;
       case TransactionStatus.finished:
         return ColorConstant.khaki;
+      case TransactionStatus.returnedToPreviousOffice:
+        return const Color(0xFF7E57C2);
     }
   }
 
@@ -98,17 +109,20 @@ extension TransactionStatusX on TransactionStatus {
           TransactionStatus.transferred,
           TransactionStatus.suspended,
           TransactionStatus.exceptionallyTransferred,
+          TransactionStatus.returnedToPreviousOffice,
         ];
       case TransactionStatus.suspended:
         return [
           TransactionStatus.transferred,
           TransactionStatus.rejected,
           TransactionStatus.exceptionallyTransferred,
+          TransactionStatus.returnedToPreviousOffice,
         ];
       case TransactionStatus.transferred:
       case TransactionStatus.exceptionallyTransferred:
       case TransactionStatus.rejected:
       case TransactionStatus.finished:
+      case TransactionStatus.returnedToPreviousOffice:
         return [];
     }
   }
@@ -122,12 +136,13 @@ extension TransactionStatusAttachmentX on TransactionStatus {
   AttachmentRequirement get attachmentRequirement {
     switch (this) {
       case TransactionStatus.rejected:
+      case TransactionStatus.exceptionallyTransferred:
+      case TransactionStatus.returnedToPreviousOffice:
         return AttachmentRequirement.required;
       case TransactionStatus.transferred:
-      case TransactionStatus.exceptionallyTransferred:
         return AttachmentRequirement.optional;
       case TransactionStatus.suspended:
-        return AttachmentRequirement.none;
+        return AttachmentRequirement.required;
       case TransactionStatus.newTransaction:
       case TransactionStatus.underReview:
       case TransactionStatus.finished:

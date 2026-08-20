@@ -2,7 +2,6 @@
 
 import 'package:employee_application/Core/constant/colors_constant.dart';
 import 'package:employee_application/Core/error/network_exceptions.dart';
-import 'package:employee_application/Core/extension/navigation_service.dart';
 import 'package:employee_application/Core/extension/screen_size_extension.dart';
 import 'package:employee_application/Features/User/detailes_transactions_page/manager/add_repliy/cubit/add_repliy_cubit.dart';
 import 'package:employee_application/Features/Widgets/custom_text.dart';
@@ -11,6 +10,7 @@ import 'package:employee_application/injection.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 Future<bool?> showAddReplyDialog({
   required BuildContext context,
@@ -124,7 +124,7 @@ class _AddReplyDialogState extends State<AddReplyDialog> {
             });
           },
           success: (s) {
-            context.popPage();
+            context.pop(true);
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 behavior: SnackBarBehavior.floating,
@@ -184,7 +184,7 @@ class _AddReplyDialogState extends State<AddReplyDialog> {
           ),
           if (!isLoading)
             InkWell(
-              onTap: () => context.popPage(),
+              onTap: () => context.pop(),
               borderRadius: BorderRadius.circular(context.width(20)),
               child: Icon(
                 Icons.close,
@@ -272,7 +272,7 @@ class _AddReplyDialogState extends State<AddReplyDialog> {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           TextButton(
-            onPressed: isLoading ? null : () => context.popPage(),
+            onPressed: isLoading ? null : () => context.pop(),
             style: TextButton.styleFrom(
               backgroundColor: ColorConstant.grey,
               padding: EdgeInsets.symmetric(

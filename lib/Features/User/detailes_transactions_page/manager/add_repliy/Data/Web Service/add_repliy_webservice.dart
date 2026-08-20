@@ -25,15 +25,16 @@ class AddRepliyWebServiceImpl implements AddRepliyWebService {
     List<PlatformFile>? files,
     String? text,
   ) async {
-    final Map<String, dynamic> data = {'idTransaction': idTransaction};
+    final Map<String, dynamic> data = {};
     if (text != null && text.trim().isNotEmpty) {
-      data['text'] = text.trim();
+      data['comment'] = text;
     }
+    data['comment_type'] = "citizen_message";
     if (files != null && files.isNotEmpty) {
       for (int i = 0; i < files.length; i++) {
         final file = files[i];
         if (file.bytes != null) {
-          data['attashments[$i]'] = MultipartFile.fromBytes(
+          data['attachments[$i]'] = MultipartFile.fromBytes(
             file.bytes!,
             filename: file.name,
           );
@@ -43,7 +44,7 @@ class AddRepliyWebServiceImpl implements AddRepliyWebService {
 
     final formData = FormData.fromMap(data);
     final response = await _apiConsumer.post(
-      EndPoints.addRepliyUrl,
+      "${EndPoints.addRepliyUrl}$idTransaction",
       formData: formData,
     );
     return AddRepliyEntity.fromJson(response);

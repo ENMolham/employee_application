@@ -1,6 +1,6 @@
 import 'package:employee_application/Core/api/api_consumer.dart';
 import 'package:employee_application/Core/api/end_points.dart';
-import 'package:employee_application/Features/User/transactions_page/manager/logout/Data/Model/logout_entity.dart';
+import 'package:employee_application/Features/Auth/logout/Data/Model/logout_entity.dart';
 import 'package:injectable/injectable.dart';
 
 abstract class LogOutWebService {
@@ -15,7 +15,7 @@ class LogOutWebServiceImpl implements LogOutWebService {
 
   @override
   Future<LogOutEntity> logOut() async {
-    final response = await _apiConsumer.get(EndPoints.logOutUrl);
+    final response = await _apiConsumer.post(EndPoints.logOutUrl);
     return LogOutEntity.fromJson(response);
   }
 }

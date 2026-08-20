@@ -34,18 +34,4 @@ class AddRepliyCubit extends Cubit<AddRepliyState> {
       emit(AddRepliyState.success(r));
     });
   }
-
-  Future<void> fakEmitaddRepliy(
-    String idTransaction,
-    List<PlatformFile>? files,
-    String? text,
-  ) async {
-    emit(const AddRepliyState.loading());
-    if (isClosed) return;
-    await Future.delayed(const Duration(milliseconds: 1500));
-    emit(
-      AddRepliyState.success(AddRepliyEntity(message: "تم ارسال الرد بنجاح")),
-    );
-    return;
-  }
 }

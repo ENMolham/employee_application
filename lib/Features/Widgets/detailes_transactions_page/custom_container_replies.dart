@@ -3,12 +3,15 @@ import 'dart:async';
 import 'package:employee_application/Core/constant/colors_constant.dart';
 import 'package:employee_application/Core/extension/screen_size_extension.dart';
 import 'package:employee_application/Features/User/detailes_transactions_page/Data/Model/detailes_transactions_page_entity.dart';
+import 'package:employee_application/Features/User/detailes_transactions_page/cubit/detailes_transactions_page_cubit.dart';
 import 'package:employee_application/Features/User/detailes_transactions_page/manager/add_repliy/presentation/add_repliy_dialog.dart';
 import 'package:employee_application/Features/Widgets/custom_button.dart';
 import 'package:employee_application/Features/Widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 // ignore: avoid_web_libraries_in_flutter, deprecated_member_use
 import 'dart:html' as html;
+
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CustomContainerReplies extends StatefulWidget {
   final DetailesTransactionsPageEntity entity;
@@ -152,16 +155,23 @@ class _CustomContainerRepliesState extends State<CustomContainerReplies> {
                       ],
                     ),
                     onTap: () async {
-                      await showAddReplyDialog(
+                      final result = await showAddReplyDialog(
                         context: context,
                         transactionId: widget.entity.transactionID,
                       );
+                      if (result != null && context.mounted) {
+                        context
+                            .read<DetailesTransactionsPageCubit>()
+                            .emitdetailesTransactionsPage(
+                              widget.entity.transactionID,
+                            );
+                      }
                     },
                   ),
               ],
             ),
           ),
-          if (widget.entity.replies.isEmpty)
+          if (widget.entity.replies == null || widget.entity.replies!.isEmpty)
             Container(
               height: context.height(370),
               margin: EdgeInsets.only(right: context.width(18)),
@@ -174,18 +184,19 @@ class _CustomContainerRepliesState extends State<CustomContainerReplies> {
                 ),
               ),
             ),
-          if (widget.entity.replies.isNotEmpty)
+          if (widget.entity.replies != null &&
+              widget.entity.replies!.isNotEmpty)
             Container(
               height: context.height(370),
               margin: EdgeInsets.only(right: context.width(18)),
               child: ListView.builder(
-                itemCount: widget.entity.replies.length,
+                itemCount: widget.entity.replies!.length,
                 padding: EdgeInsets.only(bottom: context.height(18)),
                 reverse: true,
                 itemBuilder: (context, index) {
                   final item = widget
                       .entity
-                      .replies[widget.entity.replies.length - 1 - index];
+                      .replies![widget.entity.replies!.length - 1 - index];
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [

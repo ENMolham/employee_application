@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:employee_application/Core/error/network_exceptions.dart';
 import 'package:employee_application/Core/utils/shared_preference_utils.dart';
-import 'package:employee_application/Features/User/transactions_page/manager/logout/Data/Model/logout_entity.dart';
-import 'package:employee_application/Features/User/transactions_page/manager/logout/Data/Repostry/basereposotry_logout.dart';
+import 'package:employee_application/Features/Auth/logout/Data/Model/logout_entity.dart';
+import 'package:employee_application/Features/Auth/logout/Data/Repostry/basereposotry_logout.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
@@ -30,17 +30,5 @@ class LogOutCubit extends Cubit<LogOutState> {
       _sharedPreferencesUtils.removeGovernmentEntity();
       emit(LogOutState.success(r));
     });
-  }
-
-  Future<void> fakEmitlogOut() async {
-    emit(const LogOutState.loading());
-    if (isClosed) return;
-    await Future.delayed(const Duration(milliseconds: 1500));
-    _sharedPreferencesUtils.removeToken();
-    _sharedPreferencesUtils.removeUserName();
-    _sharedPreferencesUtils.removeImageUrl();
-    _sharedPreferencesUtils.removeGovernmentEntity();
-    emit(LogOutState.success(LogOutEntity(message: "تم تسجيل الخروج بنجاح")));
-    return;
   }
 }

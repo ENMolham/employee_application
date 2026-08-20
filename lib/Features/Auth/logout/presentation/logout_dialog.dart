@@ -4,7 +4,7 @@ import 'package:employee_application/Core/constant/colors_constant.dart';
 import 'package:employee_application/Core/error/network_exceptions.dart';
 import 'package:employee_application/Core/extension/navigation_service.dart';
 import 'package:employee_application/Core/extension/screen_size_extension.dart';
-import 'package:employee_application/Features/User/transactions_page/manager/logout/cubit/logout_cubit.dart';
+import 'package:employee_application/Features/Auth/logout/cubit/logout_cubit.dart';
 import 'package:employee_application/Features/Widgets/custom_text.dart';
 import 'package:employee_application/app_router.dart';
 import 'package:employee_application/injection.dart';
@@ -157,8 +157,7 @@ class LogOutDialog extends StatelessWidget {
                           ),
                           onPressed: isLoading
                               ? null
-                              : () =>
-                                    context.read<LogOutCubit>().fakEmitlogOut(),
+                              : () => context.read<LogOutCubit>().emitlogOut(),
                           child: isLoading
                               ? SizedBox(
                                   width: context.width(18),

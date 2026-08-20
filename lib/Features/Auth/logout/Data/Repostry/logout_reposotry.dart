@@ -1,9 +1,9 @@
 import 'package:dartz/dartz.dart';
 import 'package:employee_application/Core/Network/network_info.dart';
 import 'package:employee_application/Core/error/network_exceptions.dart';
-import 'package:employee_application/Features/User/transactions_page/manager/logout/Data/Model/logout_entity.dart';
-import 'package:employee_application/Features/User/transactions_page/manager/logout/Data/Repostry/basereposotry_logout.dart';
-import 'package:employee_application/Features/User/transactions_page/manager/logout/Data/Web%20Service/logout_webservice.dart';
+import 'package:employee_application/Features/Auth/logout/Data/Model/logout_entity.dart';
+import 'package:employee_application/Features/Auth/logout/Data/Repostry/basereposotry_logout.dart';
+import 'package:employee_application/Features/Auth/logout/Data/Web%20Service/logout_webservice.dart';
 import 'package:injectable/injectable.dart';
 
 @Singleton(as: BaseReposotrylogOut)

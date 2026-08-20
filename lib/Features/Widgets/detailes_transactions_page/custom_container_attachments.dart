@@ -91,11 +91,12 @@ class _CustomContainerAttachmentsState
 
   @override
   Widget build(BuildContext context) {
-    final attachments = [...widget.entity.attachments!];
+    final attachments = [...?widget.entity.attachments];
 
     attachments.sort((a, b) {
       final dateA = DateTime.parse(a.attachmentUploadDate);
       final dateB = DateTime.parse(b.attachmentUploadDate);
+
       return isNewestFirst ? dateB.compareTo(dateA) : dateA.compareTo(dateB);
     });
     return Container(

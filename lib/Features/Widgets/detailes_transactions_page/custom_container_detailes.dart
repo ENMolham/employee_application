@@ -1,11 +1,13 @@
 import 'package:employee_application/Core/constant/colors_constant.dart';
 import 'package:employee_application/Core/extension/screen_size_extension.dart';
 import 'package:employee_application/Features/User/detailes_transactions_page/Data/Model/detailes_transactions_page_entity.dart';
+import 'package:employee_application/Features/User/detailes_transactions_page/cubit/detailes_transactions_page_cubit.dart';
 import 'package:employee_application/Features/Widgets/custom_text.dart';
 import 'package:employee_application/Features/User/detailes_transactions_page/manager/change_status/presentation/change_status_dialog.dart';
 import 'package:employee_application/Features/Widgets/detailes_transactions_page/custom_row_data.dart';
 import 'package:employee_application/Features/Widgets/transaction_status_enum.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CustomContainerDetailes extends StatefulWidget {
   final DetailesTransactionsPageEntity entity;
@@ -70,11 +72,18 @@ class _CustomContainerDetailesState extends State<CustomContainerDetailes> {
                 if (currentStatus.canChangeStatus)
                   InkWell(
                     onTap: () async {
-                      await showChangeStatusDialog(
+                      final result = await showChangeStatusDialog(
                         context: context,
                         currentStatus: currentStatus,
                         transactionId: widget.entity.transactionID,
                       );
+                      if (result != null && context.mounted) {
+                        context
+                            .read<DetailesTransactionsPageCubit>()
+                            .emitdetailesTransactionsPage(
+                              widget.entity.transactionID,
+                            );
+                      }
                     },
                     borderRadius: BorderRadius.circular(50),
                     child: Padding(
@@ -129,6 +138,11 @@ class _CustomContainerDetailesState extends State<CustomContainerDetailes> {
                     CustomRowData(
                       keyText: "مكان دفع الإيصال :",
                       valueText: widget.entity.transactionsPlacedPaied ?? "---",
+                    ),
+                  if (widget.entity.transactionsDatePaied != null)
+                    CustomRowData(
+                      keyText: "تاريخ دفع الايصال :",
+                      valueText: widget.entity.transactionsDatePaied ?? "---",
                     ),
                   CustomRowData(
                     keyText: "حالة المعاملة :",

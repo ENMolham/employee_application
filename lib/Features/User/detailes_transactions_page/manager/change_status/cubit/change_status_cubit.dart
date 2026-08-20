@@ -37,20 +37,20 @@ class ChangeStatusCubit extends Cubit<ChangeStatusState> {
     });
   }
 
-  Future<void> fakEmitchangeStatus(
-    String idTransaction,
-    String newStatus,
-    List<PlatformFile>? files,
-    String? text,
-  ) async {
-    emit(const ChangeStatusState.loading());
-    if (isClosed) return;
-    await Future.delayed(const Duration(milliseconds: 1500));
-    emit(
-      ChangeStatusState.success(
-        ChangeStatusEntity(message: "تم تغير الحالة بنجاح"),
-      ),
-    );
-    return;
-  }
+  // Future<void> fakEmitchangeStatus(
+  //   String idTransaction,
+  //   String newStatus,
+  //   List<PlatformFile>? files,
+  //   String? text,
+  // ) async {
+  //   emit(const ChangeStatusState.loading());
+  //   if (isClosed) return;
+  //   await Future.delayed(const Duration(milliseconds: 1500));
+  //   emit(
+  //     ChangeStatusState.success(
+  //       ChangeStatusEntity(message: "تم تغير الحالة بنجاح"),
+  //     ),
+  //   );
+  //   return;
+  // }
 }

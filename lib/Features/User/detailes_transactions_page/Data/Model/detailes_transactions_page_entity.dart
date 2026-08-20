@@ -14,10 +14,11 @@ class DetailesTransactionsPageEntity {
   final String statusTransaction;
   final List<Attachments>? attachments;
   final List<Timeline> timeline;
-  final List<Replies> replies;
+  final List<Replies>? replies;
   final List<ModelData>? modelData;
   final String? transactionsCost;
   final String? transactionsPlacedPaied;
+  final String? transactionsDatePaied;
 
   DetailesTransactionsPageEntity({
     required this.message,
@@ -30,10 +31,11 @@ class DetailesTransactionsPageEntity {
     required this.statusTransaction,
     this.attachments,
     required this.timeline,
-    required this.replies,
+    this.replies,
     this.modelData,
     this.transactionsCost,
     this.transactionsPlacedPaied,
+    this.transactionsDatePaied,
   });
 
   factory DetailesTransactionsPageEntity.fromJson(Map<String, dynamic> json) =>

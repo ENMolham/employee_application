@@ -160,7 +160,7 @@ class _LoginPageState extends State<LoginPage> {
                           ? null
                           : () {
                               if (keyLogin.currentState!.validate()) {
-                                context.read<LoginCubit>().fakEmitLogin(
+                                context.read<LoginCubit>().emitLogin(
                                   loginController.text,
                                   passwordController.text,
                                 );

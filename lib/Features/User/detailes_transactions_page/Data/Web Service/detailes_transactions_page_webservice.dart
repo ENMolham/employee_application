@@ -21,8 +21,7 @@ class DetailesTransactionsPageWebServiceImpl
     String idTransaction,
   ) async {
     final response = await _apiConsumer.post(
-      EndPoints.detailesTransactionsPageUrl,
-      body: {'idTransaction': idTransaction},
+      "${EndPoints.detailesTransactionsPageUrl}$idTransaction",
     );
     return DetailesTransactionsPageEntity.fromJson(response);
   }

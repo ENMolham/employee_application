@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:employee_application/Core/constant/colors_constant.dart';
 import 'package:employee_application/Core/error/network_exceptions.dart';
 import 'package:employee_application/Core/extension/navigation_service.dart';
@@ -32,11 +34,12 @@ class TransactionsPage extends StatefulWidget {
 
 class _TransactionsPageState extends State<TransactionsPage> {
   late final TransactionsPageCubit cubit;
+  Timer? _searchDebounce;
   @override
   void initState() {
     super.initState();
     cubit = getIt<TransactionsPageCubit>();
-    cubit.fakEmittransactionsPage(
+    cubit.emittransactionsPage(
       searchController.text,
       selectedStatus == "الكل" ? null : selectedStatus,
       selectedDay == "الكل" ? null : selectedDay,
@@ -49,6 +52,7 @@ class _TransactionsPageState extends State<TransactionsPage> {
   void dispose() {
     cubit.close();
     searchController.dispose();
+    _searchDebounce!.cancel();
     super.dispose();
   }
 
@@ -95,7 +99,7 @@ class _TransactionsPageState extends State<TransactionsPage> {
                       setState(() => selectedStatus = value);
                       context
                           .read<TransactionsPageCubit>()
-                          .fakEmittransactionsPage(
+                          .emittransactionsPage(
                             searchController.text,
                             selectedStatus == "الكل" ? null : selectedStatus,
                             selectedDay == "الكل" ? null : selectedDay,
@@ -107,7 +111,7 @@ class _TransactionsPageState extends State<TransactionsPage> {
                       setState(() => selectedDay = value);
                       context
                           .read<TransactionsPageCubit>()
-                          .fakEmittransactionsPage(
+                          .emittransactionsPage(
                             searchController.text,
                             selectedStatus == "الكل" ? null : selectedStatus,
                             selectedDay == "الكل" ? null : selectedDay,
@@ -119,7 +123,7 @@ class _TransactionsPageState extends State<TransactionsPage> {
                       setState(() => selectedMonth = value);
                       context
                           .read<TransactionsPageCubit>()
-                          .fakEmittransactionsPage(
+                          .emittransactionsPage(
                             searchController.text,
                             selectedStatus == "الكل" ? null : selectedStatus,
                             selectedDay == "الكل" ? null : selectedDay,
@@ -131,13 +135,33 @@ class _TransactionsPageState extends State<TransactionsPage> {
                       setState(() => selectedYear = value);
                       context
                           .read<TransactionsPageCubit>()
-                          .fakEmittransactionsPage(
+                          .emittransactionsPage(
                             searchController.text,
                             selectedStatus == "الكل" ? null : selectedStatus,
                             selectedDay == "الكل" ? null : selectedDay,
                             selectedMonth == "الكل" ? null : selectedMonth,
                             selectedYear == "الكل" ? null : selectedYear,
                           );
+                    },
+                    onSearchChanged: (String value) {
+                      _searchDebounce?.cancel();
+                      _searchDebounce = Timer(
+                        const Duration(milliseconds: 700),
+                        () {
+                          if (!mounted) return;
+                          context
+                              .read<TransactionsPageCubit>()
+                              .emittransactionsPage(
+                                searchController.text,
+                                selectedStatus == "الكل"
+                                    ? null
+                                    : selectedStatus,
+                                selectedDay == "الكل" ? null : selectedDay,
+                                selectedMonth == "الكل" ? null : selectedMonth,
+                                selectedYear == "الكل" ? null : selectedYear,
+                              );
+                        },
+                      );
                     },
                   ),
                   CustomContainerRowTitel(
@@ -167,7 +191,7 @@ class _TransactionsPageState extends State<TransactionsPage> {
                             onPressed: () {
                               context
                                   .read<TransactionsPageCubit>()
-                                  .fakEmittransactionsPage(
+                                  .emittransactionsPage(
                                     searchController.text,
                                     selectedStatus == "الكل"
                                         ? null

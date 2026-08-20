@@ -26,6 +26,11 @@ import 'Features/Auth/login/cubit/login_password_visibility_cubit.dart' as _i72;
 import 'Features/Auth/login/Data/Repostry/basereposotry_login.dart' as _i848;
 import 'Features/Auth/login/Data/Repostry/login_reposotry.dart' as _i983;
 import 'Features/Auth/login/Data/Web%20Service/login_webservice.dart' as _i786;
+import 'Features/Auth/logout/cubit/logout_cubit.dart' as _i883;
+import 'Features/Auth/logout/Data/Repostry/basereposotry_logout.dart' as _i926;
+import 'Features/Auth/logout/Data/Repostry/logout_reposotry.dart' as _i233;
+import 'Features/Auth/logout/Data/Web%20Service/logout_webservice.dart'
+    as _i515;
 import 'Features/User/detailes_transactions_page/cubit/detailes_transactions_page_cubit.dart'
     as _i608;
 import 'Features/User/detailes_transactions_page/Data/Repostry/basereposotry_detailes_transactions_page.dart'
@@ -65,14 +70,14 @@ import 'Features/User/transactions_page/Data/Repostry/transactions_page_reposotr
     as _i638;
 import 'Features/User/transactions_page/Data/Web%20Service/transactions_page_webservice.dart'
     as _i139;
-import 'Features/User/transactions_page/manager/logout/cubit/logout_cubit.dart'
-    as _i413;
-import 'Features/User/transactions_page/manager/logout/Data/Repostry/basereposotry_logout.dart'
-    as _i477;
-import 'Features/User/transactions_page/manager/logout/Data/Repostry/logout_reposotry.dart'
-    as _i32;
-import 'Features/User/transactions_page/manager/logout/Data/Web%20Service/logout_webservice.dart'
-    as _i588;
+import 'Features/User/transactions_page/manager/get_number_notifications/cubit/get_number_notifications_cubit.dart'
+    as _i778;
+import 'Features/User/transactions_page/manager/get_number_notifications/Data/Repostry/basereposotry_get_number_notifications.dart'
+    as _i574;
+import 'Features/User/transactions_page/manager/get_number_notifications/Data/Repostry/get_number_notifications_reposotry.dart'
+    as _i1024;
+import 'Features/User/transactions_page/manager/get_number_notifications/Data/Web%20Service/get_number_notifications_webservice.dart'
+    as _i426;
 
 extension GetItInjectableX on _i174.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
@@ -93,6 +98,12 @@ extension GetItInjectableX on _i174.GetIt {
       () => thirdPartyInjection.sharedPreferencesUtils,
     );
     gh.singleton<_i989.ApiConsumer>(() => _i425.DioConsumer(gh<_i361.Dio>()));
+    gh.singleton<_i515.LogOutWebService>(
+      () => _i515.LogOutWebServiceImpl(gh<_i989.ApiConsumer>()),
+    );
+    gh.singleton<_i426.GetNumberNotificationsWebService>(
+      () => _i426.GetNumberNotificationsWebServiceImpl(gh<_i989.ApiConsumer>()),
+    );
     gh.singleton<_i139.TransactionsPageWebService>(
       () => _i139.TransactionsPageWebServiceImpl(gh<_i989.ApiConsumer>()),
     );
@@ -106,11 +117,14 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i1071.NetworkInfo>(
       () => _i1071.NetworkInfoImpl(connectivity: gh<_i895.Connectivity>()),
     );
-    gh.singleton<_i588.LogOutWebService>(
-      () => _i588.LogOutWebServiceImpl(gh<_i989.ApiConsumer>()),
-    );
     gh.singleton<_i786.LoginWebService>(
       () => _i786.LoginWebServiceImpl(gh<_i989.ApiConsumer>()),
+    );
+    gh.singleton<_i926.BaseReposotrylogOut>(
+      () => _i233.LogOutReposotryImpl(
+        networkInfo: gh<_i1071.NetworkInfo>(),
+        logOutWebService: gh<_i515.LogOutWebService>(),
+      ),
     );
     gh.singleton<_i191.BaseReposotrydetailesTransactionsPage>(
       () => _i69.DetailesTransactionsPageReposotryImpl(
@@ -119,10 +133,11 @@ extension GetItInjectableX on _i174.GetIt {
             gh<_i856.DetailesTransactionsPageWebService>(),
       ),
     );
-    gh.singleton<_i477.BaseReposotrylogOut>(
-      () => _i32.LogOutReposotryImpl(
+    gh.singleton<_i574.BaseReposotrygetNumberNotifications>(
+      () => _i1024.GetNumberNotificationsReposotryImpl(
         networkInfo: gh<_i1071.NetworkInfo>(),
-        logOutWebService: gh<_i588.LogOutWebService>(),
+        getNumberNotificationsWebService:
+            gh<_i426.GetNumberNotificationsWebService>(),
       ),
     );
     gh.factory<_i608.DetailesTransactionsPageCubit>(
@@ -154,16 +169,21 @@ extension GetItInjectableX on _i174.GetIt {
         transactionsPageWebService: gh<_i139.TransactionsPageWebService>(),
       ),
     );
+    gh.factory<_i778.GetNumberNotificationsCubit>(
+      () => _i778.GetNumberNotificationsCubit(
+        gh<_i574.BaseReposotrygetNumberNotifications>(),
+      ),
+    );
+    gh.factory<_i883.LogOutCubit>(
+      () => _i883.LogOutCubit(
+        gh<_i926.BaseReposotrylogOut>(),
+        gh<_i131.SharedPreferencesUtils>(),
+      ),
+    );
     gh.singleton<_i429.BaseReposotrychangeStatus>(
       () => _i410.ChangeStatusReposotryImpl(
         networkInfo: gh<_i1071.NetworkInfo>(),
         changeStatusWebService: gh<_i569.ChangeStatusWebService>(),
-      ),
-    );
-    gh.factory<_i413.LogOutCubit>(
-      () => _i413.LogOutCubit(
-        gh<_i477.BaseReposotrylogOut>(),
-        gh<_i131.SharedPreferencesUtils>(),
       ),
     );
     gh.factory<_i912.NotificationCubit>(

@@ -38,7 +38,7 @@ class ChangeStatusWebServiceImpl implements ChangeStatusWebService {
       for (int i = 0; i < files.length; i++) {
         final file = files[i];
         if (file.bytes != null) {
-          data['attashments[$i]'] = MultipartFile.fromBytes(
+          data['files[$i]'] = MultipartFile.fromBytes(
             file.bytes!,
             filename: file.name,
           );

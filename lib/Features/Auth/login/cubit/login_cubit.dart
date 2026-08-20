@@ -20,10 +20,11 @@ class LoginCubit extends Cubit<LoginState> {
 
   Future<void> emitLogin(String login, String password) async {
     emit(const LoginState.loading());
+    final deviceToken = await FirebaseMessaging.instance.getToken();
     final response = await _baseReposotryLogin.login(
       login,
       password,
-      fetchDeviceToken().toString(),
+      deviceToken ?? "",
     );
 
     response.fold((l) => emit(LoginState.error(l)), (r) {
@@ -33,29 +34,5 @@ class LoginCubit extends Cubit<LoginState> {
       _sharedPreferencesUtils.setGovernmentEntity(r.governmentEntityUser);
       emit(LoginState.success(r));
     });
-  }
-
-  Future<String?> fetchDeviceToken() async {
-    String? token = await FirebaseMessaging.instance.getToken();
-    return token;
-  }
-
-  Future<void> fakEmitLogin(String login, String password) async {
-    emit(const LoginState.loading());
-    await Future.delayed(const Duration(milliseconds: 500));
-    final entity = LoginEntity(
-      message: "Fake success",
-      token: '11111111111111111111111111111111111',
-      nameUser: "محمد سعيد",
-      imageUserUrl:
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIb1Rzl1hRfAv4mVFgDajXGAByt2Jhq8ECIQ&s",
-      governmentEntityUser: "شعبة الأحوال المدنية",
-    );
-    _sharedPreferencesUtils.setToken(entity.token);
-    _sharedPreferencesUtils.setUserName(entity.nameUser);
-    _sharedPreferencesUtils.setImageUrl(entity.imageUserUrl);
-    _sharedPreferencesUtils.setGovernmentEntity(entity.governmentEntityUser);
-    emit(LoginState.success(entity));
-    return;
   }
 }

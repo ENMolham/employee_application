@@ -23,14 +23,15 @@ DetailesTransactionsPageEntity _$DetailesTransactionsPageEntityFromJson(
   timeline: (json['timeline'] as List<dynamic>)
       .map((e) => Timeline.fromJson(e as Map<String, dynamic>))
       .toList(),
-  replies: (json['replies'] as List<dynamic>)
-      .map((e) => Replies.fromJson(e as Map<String, dynamic>))
+  replies: (json['replies'] as List<dynamic>?)
+      ?.map((e) => Replies.fromJson(e as Map<String, dynamic>))
       .toList(),
   modelData: (json['modelData'] as List<dynamic>?)
       ?.map((e) => ModelData.fromJson(e as Map<String, dynamic>))
       .toList(),
   transactionsCost: json['transactionsCost'] as String?,
   transactionsPlacedPaied: json['transactionsPlacedPaied'] as String?,
+  transactionsDatePaied: json['transactionsDatePaied'] as String?,
 );
 
 Map<String, dynamic> _$DetailesTransactionsPageEntityToJson(
@@ -50,6 +51,7 @@ Map<String, dynamic> _$DetailesTransactionsPageEntityToJson(
   'modelData': instance.modelData,
   'transactionsCost': instance.transactionsCost,
   'transactionsPlacedPaied': instance.transactionsPlacedPaied,
+  'transactionsDatePaied': instance.transactionsDatePaied,
 };
 
 ModelData _$ModelDataFromJson(Map<String, dynamic> json) => ModelData(

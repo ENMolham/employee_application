@@ -12,13 +12,14 @@ import 'package:employee_application/injection.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
-Future<TransactionStatus?> showChangeStatusDialog({
+Future<bool?> showChangeStatusDialog({
   required BuildContext context,
   required String transactionId,
   required TransactionStatus currentStatus,
 }) {
-  return showDialog<TransactionStatus>(
+  return showDialog<bool>(
     context: context,
     barrierDismissible: true,
     builder: (context) {
@@ -150,7 +151,7 @@ class _ChangeStatusDialogState extends State<ChangeStatusDialog> {
             });
           },
           success: (s) {
-            context.popPage();
+            context.pop(true);
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 behavior: SnackBarBehavior.floating,
